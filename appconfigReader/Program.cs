@@ -28,7 +28,7 @@ namespace appconfigReader
                 });
             foreach (var key in keyValues)
             {
-                Console.WriteLine($"{key.Key}, {key.Value}");
+                Console.WriteLine($"\"{key.Key}\": {key.Value},");
             }
 
             Console.ReadLine();
