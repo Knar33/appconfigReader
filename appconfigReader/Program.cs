@@ -23,15 +23,31 @@ namespace appconfigReader
                 .Select(key =>
                 {
                     provider.TryGet(key, out var value);
-                    var newKey = string.IsNullOrEmpty(SectionDelimiter) ? key : key.Replace(SectionDelimiter, ":", StringComparison.OrdinalIgnoreCase);
-                    return new KeyValuePair<string, string>(newKey, value);
+                    if (OnlyWhiteSpace(value))
+                    {
+                        value = "";
+                    }
+                    return new KeyValuePair<string, string>(key, value);
                 });
             foreach (var key in keyValues)
             {
-                Console.WriteLine($"\"{key.Key}\": {key.Value},");
+                Console.WriteLine($"\"{key.Key}\": \"{key.Value}\",");
             }
 
             Console.ReadLine();
+        }
+
+        public static bool OnlyWhiteSpace(string input)
+        {
+            int nonSpace = 0;
+            foreach (var character in input.ToArray())
+            {
+                if (!char.IsWhiteSpace(character))
+                {
+                    nonSpace++;
+                }
+            }
+            return nonSpace == 0;
         }
     }
 }
